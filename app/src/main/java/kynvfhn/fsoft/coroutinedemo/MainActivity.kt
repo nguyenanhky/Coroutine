@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnStart.setOnClickListener {
-            //requestData()
+            requestData()
             binding.processBar.visibility = View.VISIBLE
-            requestDataWithSuspend()
+//            requestDataWithSuspend()
 
-            Log.i(TAG, "onCreate: ")
+            Log.d(TAG, "onCreate: ")
         }
 
         binding.btnIncrease.setOnClickListener {
@@ -33,13 +33,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     private  fun requestDataWithSuspend() {
         val scope = CoroutineScope(Job() + Dispatchers.Main)
         scope.launch {
-            Log.i(TAG, "requestDataWithSuspend: ${Thread.currentThread().name}")
+            Log.d(TAG, "requestDataWithSuspend: ${Thread.currentThread().name}")
+            val startExtuteTime = System.currentTimeMillis();
             delay(6000L)
+            val  executeTime = System.currentTimeMillis()-startExtuteTime;
             binding.processBar.visibility = View.GONE
+            Log.d(TAG, "Exe Time: "+executeTime)
             isShowedResult = true
             binding.txtData.text = "data from server"
         }
